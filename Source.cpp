@@ -8,6 +8,8 @@ void print_info(Equilateral_triangle * p)
 
 int main()
 {
+	setlocale(LC_ALL, "Russian");
+
 	const int SIZE = 9;
 	Equilateral_triangle * pointer[SIZE];
 
@@ -23,6 +25,7 @@ int main()
 
 	for (int i = 0; i < SIZE; ++i)
 	{
+//		pointer[i]->show();
 		print_info(pointer[i]);
 	}
 
@@ -33,4 +36,3 @@ int main()
 
 	return 0;
 }
-

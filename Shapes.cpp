@@ -1,17 +1,15 @@
 #include "Shapes.h"
 
 // class Equilateral_triangle
-Equilateral_triangle::Equilateral_triangle(const std::wstring & nm, const int sd_a,
-										   const int agl_A): name(nm), side_a(sd_a), angle_A(agl_A)
+Equilateral_triangle::Equilateral_triangle(const std::wstring & nm, const int a, const int A): name(nm), m_a(a), m_A(A)
 {
 };
 
-void Equilateral_triangle::show()
+void Equilateral_triangle::show() const
 {
-	std::wcout << L"Name: " << name << std::endl;
-	std::wcout << L"Sides: a = " << side_a << L", b = " << side_a << L", c = " << side_a << std::endl;
-	std::wcout << L"Angles: A = " << angle_A << L", B = " << angle_A << L", C = " << angle_A << std::endl;
-	std::wcout << std::endl;
+	std::wcout << get_name() << L":\n";
+	std::wcout << L"Стороны: a = " << get_a() << L", b = " << get_a() << L", c = " << get_a();
+	std::wcout << L"\nУглы: A = " << get_A() << L"°, B = " << get_A() << L"°, C = " << get_A() << L"°\n\n";
 }
 
 const std::wstring & Equilateral_triangle::get_name() const
@@ -19,14 +17,14 @@ const std::wstring & Equilateral_triangle::get_name() const
 	return name;
 }
 
-int Equilateral_triangle::get_side_a() const
+int Equilateral_triangle::get_a() const
 {
-	return side_a;
+	return m_a;
 }
 
-int Equilateral_triangle::get_angle_A() const
+int Equilateral_triangle::get_A() const
 {
-	return angle_A;
+	return m_A;
 }
 
 Equilateral_triangle::~Equilateral_triangle()
@@ -34,171 +32,146 @@ Equilateral_triangle::~Equilateral_triangle()
 };
 
 // class Isosceles_triangle
-Isosceles_triangle::Isosceles_triangle(const std::wstring & nm, const int sd_a, const int sd_b,
-									   const int agl_a, const int agl_B): Equilateral_triangle(nm, sd_a, agl_a)
+Isosceles_triangle::Isosceles_triangle(const std::wstring & nm, const int a, const int b, const int A, const int B): Equilateral_triangle(nm, a, A)
 {
-	side_b = sd_b;
-	angle_B = agl_B;
+	m_b = b;
+	m_B = B;
 }
 
-void Isosceles_triangle::show()
+void Isosceles_triangle::show() const
 {
-	std::wcout << L"Name: " << get_name() << std::endl;
-	std::wcout << L"Sides: a = " << get_side_a() << L", b = " << get_side_b() << L", c = " << get_side_a() << std::endl;
-	std::wcout << L"Angles: A = " << get_angle_A() << L", B = " << get_angle_B() << L", C = " << get_angle_A() << std::endl;
-	std::wcout << std::endl;
+	std::wcout << get_name() << L":\n";
+	std::wcout << L"Стороны: a = " << get_a() << L", b = " << get_b() << L", c = " << get_a();
+	std::wcout << L"\nУглы: A = " << get_A() << L"°, B = " << get_B() << L"°, C = " << get_A() << L"°\n\n";
 }
 
-int Isosceles_triangle::get_side_b() const
+int Isosceles_triangle::get_b() const
 {
-	return side_b;
+	return m_b;
 }
 
-int Isosceles_triangle::get_angle_B() const
+int Isosceles_triangle::get_B() const
 {
-	return angle_B;
+	return m_B;
 }
 
 // class Right_triangle
-Right_triangle::Right_triangle(const std::wstring & nm, const int sd_a, const int sd_b,
-							   const int sd_c, const int agl_A, const int agl_B,
-							   const int agl_C): Isosceles_triangle(nm, sd_a, sd_b, agl_A, agl_B)
+Right_triangle::Right_triangle(const std::wstring & nm, const int a, const int b, const int c, const int A, const int B,
+							   const int C): Isosceles_triangle(nm, a, b, A, B)
 {
-	side_c = sd_c;
-	angle_C = agl_C;
+	m_c = c;
+	m_C = C;
 }
 
-void Right_triangle::show()
+void Right_triangle::show() const
 {
-	std::wcout << L"Name: " << get_name() << std::endl;
-	std::wcout << L"Sides: a = " << get_side_a() << L", b = " << get_side_b() << L", c = " << get_side_c() << std::endl;
-	std::wcout << L"Angles: A = " << get_angle_A() << L", B = " << get_angle_B() << L", C = " << get_angle_C() << std::endl;
-	std::wcout << std::endl;
+	std::wcout << get_name() << L":\n";
+	std::wcout << L"Стороны: a = " << get_a() << L", b = " << get_b() << L", c = " << get_c();
+	std::wcout << L"\nУглы: A = " << get_A() << L"°, B = " << get_B() << L"°, C = " << get_C() << L"°\n\n";
 }
 
-int Right_triangle::get_side_c() const
+int Right_triangle::get_c() const
 {
-	return side_c;
+	return m_c;
 }
 
-int Right_triangle::get_angle_C() const
+int Right_triangle::get_C() const
 {
-	return angle_C;
+	return m_C;
 }
 
 // class Triangle
-Triangle::Triangle(const std::wstring & nm, const int sd_a, const int sd_b,
-				   const int sd_c, const int agl_A, const int agl_B,
-				   const int agl_C): Right_triangle(nm, sd_a, sd_b, sd_c, agl_A, agl_B, agl_C)
+Triangle::Triangle(const std::wstring & nm, const int a, const int b, const int c, const int A, const int B,
+				   const int C): Right_triangle(nm, a, b, c, A, B, C)
 {
 };
 
-void Triangle::show()
+void Triangle::show() const
 {
 	Right_triangle::show();
 }
 
-
 // class Square
-Square::Square(const std::wstring & nm, const int sd_a,
-			   const int agl_A): Equilateral_triangle(nm, sd_a, agl_A)
+Square::Square(const std::wstring & nm, const int a, const int A): Equilateral_triangle(nm, a, A)
 {
 };
 
-void Square::show()
+void Square::show() const
 {
-	std::wcout << L"Name: " << get_name() << std::endl;
-	std::wcout << L"Sides: a = " << get_side_a() << L", b = " << get_side_a();
-	std::wcout << L", c = " << get_side_a() << L", d = " << get_side_a() << std::endl;
-	std::wcout << L"Angles: A = " << get_angle_A() << L", B = " << get_angle_A();
-	std::wcout << L", C = " << get_angle_A() << L", D = " << get_angle_A() << std::endl;
-	std::wcout << std::endl;
+	std::wcout << get_name() << L":\n";
+	std::wcout << L"Стороны: a = " << get_a() << L", b = " << get_a() << L", c = " << get_a() << L", d = " << get_a();
+	std::wcout << L"\nУглы: A = " << get_A() << L"°, B = " << get_A() << L"°, C = " << get_A() << L"°, D = " << get_A() << L"°\n\n";
 }
 
 // class Rhombus
-Rhombus::Rhombus(const std::wstring & nm, const int sd_a, const int agl_A,
-				 const int agl_B): Equilateral_triangle(nm, sd_a, agl_A)
+Rhombus::Rhombus(const std::wstring & nm, const int a, const int A, const int B): Equilateral_triangle(nm, a, A)
 {
-	angle_B = agl_B;
+	m_B = B;
 }
 
-void Rhombus::show()
+void Rhombus::show() const
 {
-	std::wcout << L"Name: " << get_name() << std::endl;
-	std::wcout << L"Sides: a = " << get_side_a() << L", b = " << get_side_a();
-	std::wcout << L", c = " << get_side_a() << L", d = " << get_side_a() << std::endl;
-	std::wcout << L"Angles: A = " << get_angle_A() << L", B = " << get_angle_B();
-	std::wcout << L", C = " << get_angle_A() << L", D = " << get_angle_B() << std::endl;
-	std::wcout << std::endl;
+	std::wcout << get_name() << L":\n";
+	std::wcout << L"Стороны: a = " << get_a() << L", b = " << get_a() << L", c = " << get_a() << L", d = " << get_a();
+	std::wcout << L"\nУглы: A = " << get_A() << L"°, B = " << get_B() << L"°, C = " << get_A() << L"°, D = " << get_B() << L"°\n\n";
 }
 
-int Rhombus::get_angle_B() const
+int Rhombus::get_B() const
 {
-	return angle_B;
+	return m_B;
 }
 
 // class Rectangle
-Rectangle::Rectangle(const std::wstring & nm, const int sd_a, const int sd_b,
-					 const int agl_A): Equilateral_triangle(nm, sd_a, agl_A)
+Rectangle::Rectangle(const std::wstring & nm, const int a, const int b, const int A): Equilateral_triangle(nm, a, A)
 {
-	side_b = sd_b;
+	m_b = b;
 };
 
-void Rectangle::show()
+void Rectangle::show() const
 {
-	std::wcout << L"Name: " << get_name() << std::endl;
-	std::wcout << L"Sides: a = " << get_side_a() << L", b = " << get_side_b();
-	std::wcout << L", c = " << get_side_a() << L", d = " << get_side_b() << std::endl;
-	std::wcout << L"Angles: A = " << get_angle_A() << L", B = " << get_angle_A();
-	std::wcout << L", C = " << get_angle_A() << L", D = " << get_angle_A() << std::endl;
-	std::wcout << std::endl;
+	std::wcout << get_name() << L":\n";
+	std::wcout << L"Стороны: a = " << get_a() << L", b = " << get_b() << L", c = " << get_a() << L", d = " << get_b();
+	std::wcout << L"\nУглы: A = " << get_A() << L"°, B = " << get_A() << L"°, C = " << get_A() << L"°, D = " << get_A() << L"°\n\n";
 }
 
-int Rectangle::get_side_b() const
+int Rectangle::get_b() const
 {
-	return side_b;
+	return m_b;
 }
 
 // class Parallelogram
-Parallelogram::Parallelogram(const std::wstring & nm, const int sd_a, const int sd_b, const int agl_A,
-							 const int agl_B): Isosceles_triangle(nm, sd_a, sd_b, agl_A, agl_B)
+Parallelogram::Parallelogram(const std::wstring & nm, const int a, const int b, const int A, const int B): Isosceles_triangle(nm, a, b, A, B)
 {
 };
 
-void Parallelogram::show()
+void Parallelogram::show() const
 {
-	std::wcout << L"Name: " << get_name() << std::endl;
-	std::wcout << L"Sides: a = " << get_side_a() << L", b = " << get_side_b();
-	std::wcout << L", c = " << get_side_a() << L", d = " << get_side_b() << std::endl;
-	std::wcout << L"Angles: A = " << get_angle_A() << L", B = " << get_angle_B();
-	std::wcout << L", C = " << get_angle_A() << L", D = " << get_angle_B() << std::endl;
-	std::wcout << std::endl;
+	std::wcout << get_name() << L":\n";
+	std::wcout << L"Стороны: a = " << get_a() << L", b = " << get_b() << L", c = " << get_a() << L", d = " << get_b();
+	std::wcout << L"\nУглы: A = " << get_A() << L"°, B = " << get_B() << L"°, C = " << get_A() << L"°, D = " << get_B() << L"°\n\n";
 }
 
 // class Quadrangle
-Quadrangle::Quadrangle(const std::wstring & nm, const int sd_a, const int sd_b, const int sd_c,
-					   const int sd_d, const int agl_A, const int agl_B, const int agl_C,
-					   const int agl_D): Right_triangle(nm, sd_a, sd_b, sd_c, agl_A, agl_B, agl_C)
+Quadrangle::Quadrangle(const std::wstring & nm, const int a, const int b, const int c, const int d,
+					   const int A, const int B, const int C, const int D): Right_triangle(nm, a, b, c, A, B, C)
 {
-	side_d = sd_d;
-	angle_D = agl_D;
+	m_d = d;
+	m_D = D;
 }
 
-void Quadrangle::show()
+void Quadrangle::show() const
 {
-	std::wcout << L"Name: " << get_name() << std::endl;
-	std::wcout << L"Sides: a = " << get_side_a() << L", b = " << get_side_b();
-	std::wcout << L", c = " << get_side_c() << L", d = " << get_side_d() << std::endl;
-	std::wcout << L"Angles: A = " << get_angle_A() << L", B = " << get_angle_B();
-	std::wcout << L", C = " << get_angle_C() << L", D = " << get_angle_D() << std::endl;
+	std::wcout << get_name() << L":\n";
+	std::wcout << L"Стороны: a = " << get_a() << L", b = " << get_b() << L", c = " << get_c() << L", d = " << get_d();
+	std::wcout << L"\nУглы: A = " << get_A() << L"°, B = " << get_B() << L"°, C = " << get_C() << L"°, D = " << get_D() << L"°\n";
 }
 
-int Quadrangle::get_side_d() const
+int Quadrangle::get_d() const
 {
-	return side_d;
+	return m_d;
 }
 
-int Quadrangle::get_angle_D() const
+int Quadrangle::get_D() const
 {
-	return angle_D;
+	return m_D;
 }
