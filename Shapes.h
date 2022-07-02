@@ -2,99 +2,101 @@
 #include <iostream>
 #include <string>
 
-class Equilateral_triangle
+// Абстрактный базовый класс Фигура
+class Figure
 {
 public:
-	Equilateral_triangle(const std::wstring & nm = L"Равносторонний треугольник", const int a = 30, const int A = 60);
-	virtual void show() const;
-	const std::wstring & get_name() const;
-	int get_a() const;
-	int get_A() const;
-	virtual ~Equilateral_triangle();
+	void print();
+	virtual ~Figure();
+protected:
+	Figure(const std::wstring & nm = L"Фигура");
+	virtual void print_sides() const = 0;
+	virtual void print_angles() const = 0;
 private:
 	std::wstring name;
+};
+
+// Треугольник
+class Triangle : public Figure
+{
+public:
+	Triangle(const std::wstring & nm = L"Треугольник", int a = 10, int b = 20, int c = 30, int A = 50, int B = 60, int C = 70);
+protected:
+	void print_sides() const override;
+	void print_angles() const override;
+private:
 	int m_a;
-	int m_A;
-};
-
-class Isosceles_triangle: public Equilateral_triangle
-{
-public:
-	Isosceles_triangle(const std::wstring & nm = L"Равнобедренный треугольник", const int a = 10, const int b = 20,
-					   const int A = 50, const int B = 80);
-	void show() const override;
-	int get_b() const;
-	int get_B() const;
-private:
 	int m_b;
-	int m_B;
-};
-
-class Right_triangle: public Isosceles_triangle
-{
-public:
-	Right_triangle(const std::wstring & nm = L"Прямоугольный треугольник", const int a = 10, const int b = 20,
-				   const int c = 30, const int A = 40, const int B = 50, const int C = 90);
-	void show() const override;
-	int get_c() const;
-	int get_C() const;
-private:
 	int m_c;
+	int m_A;
+	int m_B;
 	int m_C;
 };
 
-class Triangle: public Right_triangle
+// Прямоугольный треугольник
+class Right_triangle : public Triangle
 {
 public:
-	Triangle(const std::wstring & nm = L"Треугольник", const int a = 10, const int b = 20,
-			 const int c = 30, const int A = 50, const int B = 60, const int C = 70);
-	void show() const override;
+	Right_triangle(const std::wstring & nm = L"Прямоугольный треугольник", int a = 10, int b = 20, int c = 30, int A = 50, int B = 60);
 };
 
-class Square: public Equilateral_triangle
+// Равнобедренный треугольник
+class Isosceles_triangle : public Triangle
 {
 public:
-	Square(const std::wstring & nm = L"Квадрат", const int a = 20, const int A = 90);
-	void show() const override;
+	Isosceles_triangle(const std::wstring & nm = L"Равнобедренный треугольник", int a = 10, int b = 20, int A = 50, int B = 60);
 };
 
-class Rhombus: public Equilateral_triangle
+// Равносторонний треугольник
+class Equilateral_triangle : public Triangle
 {
 public:
-	Rhombus(const std::wstring & nm = L"Ромб", const int a = 30, const int A = 60, const int B = 120);
-	void show() const override;
-	int get_B() const;
+	Equilateral_triangle(const std::wstring & nm = L"Равносторонний треугольник", int a = 30, int A = 60);
+};
+
+// Четырёхугольник
+class Quadrangle : public Figure
+{
+public:
+	Quadrangle(const std::wstring & nm = L"Четырёхугольник", int a = 10, int b = 20, int c = 30, int d = 40, int A = 50, int B = 60, int C = 70, int D = 80);
+protected:
+	void print_sides() const override;
+	void print_angles() const override;
 private:
-	int m_B;
-};
-
-class Rectangle: public Equilateral_triangle
-{
-public:
-	Rectangle(const std::wstring & nm = L"Прямоугольник", const int a = 10, const int b = 20, const int A = 90);
-	void show() const override;
-	int get_b() const;
-private:
+	int m_a;
 	int m_b;
-};
-
-class Parallelogram: public Isosceles_triangle
-{
-public:
-	Parallelogram(const std::wstring & nm = L"Параллелограмм", const int a = 20, const int b = 30,
-				  const int A = 60, const int B = 120);
-	void show() const override;
-};
-
-class Quadrangle: public Right_triangle
-{
-public:
-	Quadrangle(const std::wstring & nm = L"Четырёхугольник", const int a = 10, const int b = 20, const int c = 30,
-			   const int d = 40, const int A = 70, const int B = 80, const int C = 90, const int D = 120);
-	void show() const override;
-	int get_d() const;
-	int get_D() const;
-private:
+	int m_c;
 	int m_d;
+	int m_A;
+	int m_B;
+	int m_C;
 	int m_D;
+};
+
+// Параллелограмм
+class Parallelogram : public Quadrangle
+{
+public:
+	Parallelogram(const std::wstring & nm = L"Параллелограмм", int a = 20, int b = 30, int A = 30, int B = 40);
+};
+
+// Прямоугольник
+class Rectangle : public Parallelogram
+{
+public:
+	Rectangle(const std::wstring & nm = L"Прямоугольник", int a = 10, const int b = 20, int A = 90);
+};
+
+// Квадрат
+class Square : public Rectangle
+{
+public:
+	Square(const std::wstring & nm = L"Квадрат", int a = 20, int A = 90);
+};
+
+// Ромб
+class Rhombus : public Parallelogram
+{
+public:
+	Rhombus(const std::wstring & nm = L"Ромб", int a = 30, int A = 30, int B = 40);
 };
